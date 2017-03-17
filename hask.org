@@ -1,0 +1,6 @@
+#+TITLE: Learning Haskell
+
+* Links
+1. https://en.wikibooks.org/wiki/Haskell
+
+* Notes
