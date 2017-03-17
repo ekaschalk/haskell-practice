@@ -5,3 +5,6 @@ absolute x
   | otherwise = x
 
 test x = 3:4
+
+main =
+  do putStrLn (getLine)

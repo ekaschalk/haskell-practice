@@ -28,6 +28,7 @@ function :: (typeclass typevar) => type(arg1) -> ... -> type(return)
 - | :: Guards or conditions.
 - ++ :: Concatenation.
 - : :: Cons.
+- . :: Composition.
 
 #+begin_src haskell
 -- Guards
@@ -38,7 +39,7 @@ absolute x
 
 * Keywords
 - where :: Function-local variables.
-- let .. in :: Variables local to in-block.
+- let .. in :: Variables local to in-block (not needed in do-blocks).
 - otherwise :: Alias for True used in guards.
 
 #+begin_src haskell
@@ -76,3 +77,4 @@ Type variables (polymorphic) are lower-case (like 'a').
   - Objects that can be compared for equality.
 - Foldable
   - length :: (Foldable t) => t a -> Int (more general than [a] -> Int)
+- IO
