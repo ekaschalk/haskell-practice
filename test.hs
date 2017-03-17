@@ -4,7 +4,9 @@ absolute x
   | x < 0 = negate x
   | otherwise = x
 
-test x = 3:4
+factorial 0 = 1
+factorial n = n * factorial (n-1)
 
-main =
-  do putStrLn (getLine)
+mylength :: [a] -> Int
+mylength []     = 0
+mylength (x:xs) = 1 + mylength xs

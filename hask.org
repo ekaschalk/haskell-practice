@@ -41,6 +41,7 @@ absolute x
 - where :: Function-local variables.
 - let .. in :: Variables local to in-block (not needed in do-blocks).
 - otherwise :: Alias for True used in guards.
+- go :: Auxiliary func, accumulating param that takes extra argument 'res'.
 
 #+begin_src haskell
 -- Where within scope of all guards
