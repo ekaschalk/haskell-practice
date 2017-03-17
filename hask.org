@@ -1,6 +1,54 @@
 #+TITLE: Learning Haskell
-
 * Links
 1. https://en.wikibooks.org/wiki/Haskell
+2. https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Blang/haskell
 
-* Notes
+* Spacemacs
+** Lookup (, h)
+- f :: helm-hoogle lookup
+- h :: hoogle lookup
+- t :: type at point
+
+* Syntax
+bi-nary functions can use infix notation.
+Can be called with prefix by wrapping parenthesis the function.
+
+function -> type(arg1) -> type(arg2) -> ... -> type(return)
+
+#+begin_src haskell
+-- Binary functions as prefix
+(==) ((+) 1 2) (1 + 2)
+#+end_src
+
+* Operators
+- ==, +, - :: Basic ops.
+- | :: Guards or conditions.
+- ++ :: Concatenation.
+
+#+begin_src haskell
+-- Guards
+absolute x
+  | x < 0 = 0 - x
+  | otherwise = x
+#+end_src
+
+* Keywords
+- where :: Function-local variables.
+- otherwise :: Alias for True used in guards.
+
+#+begin_src haskell
+-- Where within scope of all guards
+numOfRealSolutions a b c
+  | disc > 0  = 2
+  | disc == 0 = 1
+  | otherwise = 0
+    where
+    disc = b^2 - 4*a*c
+#+end_src
+
+* Types
+Support for type aliases.
+
+- Bool :: True, False.
+- Char :: Single character.
+- String :: Alias of [Char].
