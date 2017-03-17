@@ -38,6 +38,7 @@ absolute x
 
 * Keywords
 - where :: Function-local variables.
+- let .. in :: Variables local to in-block.
 - otherwise :: Alias for True used in guards.
 
 #+begin_src haskell
