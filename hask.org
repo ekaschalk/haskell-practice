@@ -24,6 +24,7 @@ function -> type(arg1) -> type(arg2) -> ... -> type(return)
 - ==, +, - :: Basic ops.
 - | :: Guards or conditions.
 - ++ :: Concatenation.
+- : :: Cons.
 
 #+begin_src haskell
 -- Guards
@@ -47,8 +48,21 @@ numOfRealSolutions a b c
 #+end_src
 
 * Types
-Support for type aliases.
+Type names must be capitalized.
+Type variables (polymorphic) are lower-case (like 'a').
 
 - Bool :: True, False.
 - Char :: Single character.
-- String :: Alias of [Char].
+- String :: Alias for [Char].
+- List :: Same type container.
+- Tuple :: Fixed number of elements, immutable, can have different types.
+
+* Functions
+- 2-tuples
+  - fst :: First element.
+  - snd :: Second element.
+- List
+  - head :: First element (Don't use - throws error on empty list)
+  - tail :: Second element ("")
+- Num
+  - negate :: Additive number inverse.
