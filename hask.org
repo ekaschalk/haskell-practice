@@ -13,7 +13,10 @@
 bi-nary functions can use infix notation.
 Can be called with prefix by wrapping parenthesis the function.
 
-function -> type(arg1) -> type(arg2) -> ... -> type(return)
+function :: type(arg1) -> type(arg2) -> ... -> type(return)
+(+) :: Int -> Int -> Int
+function :: (typeclass typevar) => type(arg1) -> ... -> type(return)
+(+) :: (Num a) => a -> a -> a
 
 #+begin_src haskell
 -- Binary functions as prefix
@@ -65,4 +68,10 @@ Type variables (polymorphic) are lower-case (like 'a').
   - head :: First element (Don't use - throws error on empty list)
   - tail :: Second element ("")
 - Num
+  - Int, Integer, Double
   - negate :: Additive number inverse.
+  - fromIntegral :: (Integral a, Num b) => a -> b (eg. Int/Integer)
+- Eq
+  - Objects that can be compared for equality.
+- Foldable
+  - length :: (Foldable t) => t a -> Int (more general than [a] -> Int)
