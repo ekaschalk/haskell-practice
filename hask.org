@@ -18,6 +18,9 @@ function :: type(arg1) -> type(arg2) -> ... -> type(return)
 function :: (typeclass typevar) => type(arg1) -> ... -> type(return)
 (+) :: (Num a) => a -> a -> a
 
+Example of higher-order function:
+filter :: (a -> Bool) -> [a] -> [a]
+
 #+begin_src haskell
 -- Binary functions as prefix and infix
 (==) ((+) 1 2) (1 + 2)
@@ -42,6 +45,9 @@ double 3 == 6
 -- https://wiki.haskell.org/Constant_applicative_form
 -- eta conversion: \x -> abs x == abs
 -- point-free style is the name
+-- ab x y = (+) x y
+ab = (+)
+ab 1 2
 #+end_src
 
 * Keywords
@@ -69,6 +75,7 @@ Type variables (polymorphic) are lower-case (like 'a').
 - String :: Alias for [Char].
 - List :: Same type container.
 - Tuple :: Fixed number of elements, immutable, can have different types.
+::
 
 * Functions
 - 2-tuples
@@ -86,3 +93,7 @@ Type variables (polymorphic) are lower-case (like 'a').
 - Foldable
   - length :: (Foldable t) => t a -> Int (more general than [a] -> Int)
 - IO
+
+foldr == reduce from right to left
+scan == accumulate
+foldr1, scanr1 -> last element is initializer
