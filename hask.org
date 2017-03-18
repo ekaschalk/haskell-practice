@@ -19,7 +19,7 @@ function :: (typeclass typevar) => type(arg1) -> ... -> type(return)
 (+) :: (Num a) => a -> a -> a
 
 #+begin_src haskell
--- Binary functions as prefix
+-- Binary functions as prefix and infix
 (==) ((+) 1 2) (1 + 2)
 #+end_src
 
@@ -35,6 +35,13 @@ function :: (typeclass typevar) => type(arg1) -> ... -> type(return)
 absolute x
   | x < 0 = 0 - x
   | otherwise = x
+
+-- This works, how are nullary functions parsed?
+double = (*) 2
+double 3 == 6
+-- https://wiki.haskell.org/Constant_applicative_form
+-- eta conversion: \x -> abs x == abs
+-- point-free style is the name
 #+end_src
 
 * Keywords
