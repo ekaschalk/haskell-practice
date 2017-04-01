@@ -1,3 +1,48 @@
 #+TITLE: Haskell from First Principles
 
 https://h.sicp.org.uk/virtual~plaza/books/haskell%20first%20principles.pdf
+
+* 2. Hello, Haskell!
+** 2.4. Functions
+Type variables usually denoted a, b, c...
+Argument variables denoted x, y, ..., x', y', ..., x1, y1, ....
+
+*** Exercises
+#+begin_src haskell
+-- 1
+let half x = x / 2
+let square x = x * x
+-- 2
+let area x = 3.14 * square x
+
+area 2
+#+end_src
+
+#+RESULTS:
+: Prelude| Prelude> 12.56
+
+** 2.4. Infix Operators
+=id= is the identity function
+
+#+begin_src haskell
+id 1
+#+end_src
+
+#+RESULTS:
+: 1
+
+=:info (:i)= in ghci takes operator or function
+
+#+begin_src haskell
+:i (+)
+#+end_src
+
+#+RESULTS:
+: class Num a where
+:   (+) :: a -> a -> a
+:   ...
+:   	-- Defined in `GHC.Num'
+: infixl 6 +
+
+l -> left associative
+6 -> precedence on scale of 0-9, higher applied first
