@@ -1,5 +1,7 @@
 #+TITLE: Haskell from First Principles
 
+* Info
+Link to book:
 https://h.sicp.org.uk/virtual~plaza/books/haskell%20first%20principles.pdf
 
 * 2. Hello, Haskell!
@@ -7,21 +9,21 @@ https://h.sicp.org.uk/virtual~plaza/books/haskell%20first%20principles.pdf
 Type variables usually denoted a, b, c...
 Argument variables denoted x, y, ..., x', y', ..., x1, y1, ....
 
-*** Exercises
 #+begin_src haskell
--- 1
+-- Ex.1
 let half x = x / 2
 let square x = x * x
--- 2
+-- Ex.2
 let area x = 3.14 * square x
+let area = (* 3.14) square
 
 area 2
 #+end_src
 
 #+RESULTS:
-: Prelude| Prelude> 12.56
+: 12.56
 
-** 2.4. Infix Operators
+** 2.5. Infix operators
 =id= is the identity function
 
 #+begin_src haskell
@@ -46,3 +48,79 @@ id 1
 
 l -> left associative
 6 -> precedence on scale of 0-9, higher applied first
+** 2.6. Declaring values
+Indentation patterns
+
+#+begin_src haskell
+let
+  x = 3
+  y = 4
+
+let x = 3
+    y = 4
+
+foo x =
+    let y = x * 2
+        z = x ^ 2
+    in 2 * y * z
+#+end_src
+
+** 2.12. Let and where
+Lambdas, lets, and wheres:
+
+#+begin_src haskell
+let x = 5 in x  -- 5
+let x = 5 in x * x  -- 25
+let x = 5; y = 6 in x * y  -- 30
+let x = 3; y = 1000 in x + 3  -- 6
+
+-- Examples
+(\x -> x) 0  -- 0
+(\x -> x+1) 0  -- 1
+
+-- Deconstructing let
+let a = b in c
+-- Same as
+(\a -> c) b
+-- Concrete:
+let x = 1 in x + 2
+(\x -> x + 2) 1
+
+-- Wheres
+c where a = b
+(\a -> c) b
+x + 2 where x = 1
+#+end_src
+
+Exercises:
+
+#+begin_src haskell
+-- Ex1
+-- in let notation:
+let x = 3; y = 1000 in x * 3 + y
+-- in lambdas
+(\x y -> x * 3 + y) 3 1000
+#+end_src
+
+#+RESULTS:
+: Prelude> 1009
+
+** 2.13. Chapter exercises
+Equivalent applications with =$=
+
+#+begin_src haskell
+-- Ex1
+2 + 2 * 3 - 3
+(+ 2) $ 2 * 3 - 3
+
+-- Ex2
+(^) 10 $ 1 + 1
+10 ^ (1 + 1)
+
+-- Ex3
+2 ^ 2 * 4 ^ 5 + 1
+(+) 1 $ (*) (2 ^ 2) $ (4 ^ 5)
+(+) 1 $ (*) (2 ^ 2) $ (4 ^ 5)
+#+end_src
+
+* 3. Strings
