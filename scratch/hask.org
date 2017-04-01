@@ -2,6 +2,7 @@
 * Links
 1. https://en.wikibooks.org/wiki/Haskell
 2. https://github.com/syl20bnr/spacemacs/tree/master/layers/%2Blang/haskell
+3. http://dev.stephendiehl.com/hask/
 
 * Spacemacs
 ** Lookup (, h)
@@ -21,9 +22,17 @@ function :: (typeclass typevar) => type(arg1) -> ... -> type(return)
 Example of higher-order function:
 filter :: (a -> Bool) -> [a] -> [a]
 
+Patten matching can take constructors
+
 #+begin_src haskell
 -- Binary functions as prefix and infix
 (==) ((+) 1 2) (1 + 2)
+map (^ 2) [1..3]
+--
+data Foo = Bar | Baz Int
+f :: Foo -> Int
+f Bar = 1
+f (Baz x) = x+1
 #+end_src
 
 * Operators
@@ -32,6 +41,11 @@ filter :: (a -> Bool) -> [a] -> [a]
 - ++ :: Concatenation.
 - : :: Cons.
 - . :: Composition.
+- , :: Tuple constructor. Can't use as infix. (,) or (,,) or (,,,) or ...
+- x@pattern :: Bind x the whole value matched by pattern. `list@(x:xs)`
+- $ :: Application operator `zipWith ($) fs xs` or `f $ g $ x == f(g(x))`
+- >>= :: Sequentially compose actions (See Monads)
+- <$> :: Infix operator synonym for `Data.Functor.apply fmap` (See Applicatives)
 
 #+begin_src haskell
 -- Guards
@@ -69,13 +83,24 @@ numOfRealSolutions a b c
 * Types
 Type names must be capitalized.
 Type variables (polymorphic) are lower-case (like 'a').
+=data= for defining new data types (algebraic).
+=type= for type aliases
+=newtype= new data types equivalent to existing ones
 
 - Bool :: True, False.
 - Char :: Single character.
 - String :: Alias for [Char].
 - List :: Same type container.
 - Tuple :: Fixed number of elements, immutable, can have different types.
-::
+
+#+begin_src haskell
+data Anniversary = Birthday String Int Int Int       -- name, year, month, day
+                 | Wedding String String Int Int Int -- spouse name 1, spouse name 2, year, month, day
+
+-- Birthday, Wedding are constructors
+johnSmith :: Anniversary
+johnSmith = Birthday "John Smith" 1968 7 3
+#+end_src
 
 * Functions
 - 2-tuples
@@ -97,3 +122,4 @@ Type variables (polymorphic) are lower-case (like 'a').
 foldr == reduce from right to left
 scan == accumulate
 foldr1, scanr1 -> last element is initializer
+(Look at using Data.Foldable.fold instead)

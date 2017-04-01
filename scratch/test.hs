@@ -15,3 +15,4 @@ mysum3 [] = 0
 mysum3 (x:xs) = x + mysum3 xs
 
 -- xxx
+<$>

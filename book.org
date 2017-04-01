@@ -1,0 +1,3 @@
+#+TITLE: Haskell from First Principles
+
+https://h.sicp.org.uk/virtual~plaza/books/haskell%20first%20principles.pdf
