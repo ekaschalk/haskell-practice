@@ -176,10 +176,56 @@ Building functions:
 #+begin_src haskell
 drop_end = reverse . (drop 1) . reverse
 -- or
-drop_end = take $ (- 1) length
--- or
 drop_end x = take ((length x) - 1) x
 -- or
 drop_end x = take ((+ negate 1) $ length x) x
 #+end_src
-* 4. Base Datatypes
+
+* 4. Basic Datatypes
+** 4.2. Anatomy of a data declaration
+`Data declaration` of Bool.
+
+#+begin_src haskell
+data Bool = False | True
+#+end_src
+
+=Bool= is the `type constructor`.
+=False/True= are `data constructors`.
+=|= is logical disjunction.
+
+Exercises
+
+#+begin_src haskell
+data Mood = Blah | Woot deriving Show
+
+change Blah = Woot
+change _ = Blah
+#+end_src
+** 4.3. Numeric types
+- Num :: Base class for numeric types
+- Integral numbers :: Int, Integer
+- Fractional :: Float, Double, Rational, Scientific
+
+** 4.4. Comparing values
+Not equal done with `/=`.
+=Eq= typeclass for equality comparisons.
+=Ord= for ordered types.
+
+Ternary syntax: if COND then TRUE_VAL else FALSE_VAL
+
+** 4.7. Chapter Exercises
+
+#+begin_src haskell
+-- Ex1
+length :: [a] -> Int
+--Ex3
+(\xs -> head xs) [1, 2]
+f (x:xs) = x
+-- Ex4
+f (a, b) = a
+#+end_src
+
+#+RESULTS:
+: Prelude>
+: <interactive>:728:4: error: Parse error in pattern: a
+* 5. Types
