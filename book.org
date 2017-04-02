@@ -120,7 +120,66 @@ Equivalent applications with =$=
 -- Ex3
 2 ^ 2 * 4 ^ 5 + 1
 (+) 1 $ (*) (2 ^ 2) $ (4 ^ 5)
-(+) 1 $ (*) (2 ^ 2) $ (4 ^ 5)
 #+end_src
 
 * 3. Strings
+** 3.3. Printing simple strings
+=:type= for type of symbol.
+'::' can be read "has the type".
+
+Printing a string in a source file:
+
+#+begin_src haskell
+module Print1 where
+
+main :: IO ()
+main = putStrLn "hi"
+
+main
+#+end_src
+
+#+RESULTS:
+: Prelude> Prelude> hi
+
+Printing a string in a source file with do notation:
+
+#+begin_src haskell
+module Print2 where
+
+main :: IO ()
+main = do
+  putStrLn "1"
+  putStrLn "2"
+
+main
+#+end_src
+
+#+RESULTS:
+: Prelude| Prelude| Prelude| Prelude> 1
+: 2
+
+Exercises
+
+#+begin_src haskell
+area d = pi * r
+  where r = d / 2
+
+area 3
+#+end_src
+
+#+RESULTS:
+: 28.26
+
+** 3.7. Chapter exercises
+Building functions:
+
+#+begin_src haskell
+drop_end = reverse . (drop 1) . reverse
+-- or
+drop_end = take $ (- 1) length
+-- or
+drop_end x = take ((length x) - 1) x
+-- or
+drop_end x = take ((+ negate 1) $ length x) x
+#+end_src
+* 4. Base Datatypes
