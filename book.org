@@ -201,6 +201,7 @@ data Mood = Blah | Woot deriving Show
 change Blah = Woot
 change _ = Blah
 #+end_src
+
 ** 4.3. Numeric types
 - Num :: Base class for numeric types
 - Integral numbers :: Int, Integer
