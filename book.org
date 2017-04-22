@@ -229,4 +229,13 @@ f (a, b) = a
 #+RESULTS:
 : Prelude> 1
 * 5. Types
-* 6.
+See code for exercises, no text notes necessary.
+
+* 6. Typeclasses
+** 6.8. Enum
+#+begin_src haskell
+enumFromThenTo 'a' 'c' 'z'
+#+end_src
+
+#+RESULTS:
+: acegikmoqsuwy
