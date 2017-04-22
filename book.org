@@ -267,3 +267,4 @@ Date Mon 10 == Date Mon 10
 #+end_src
 
 Deriving Ord will order on the individual types.
+* 7. More Functional Patterns
