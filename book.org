@@ -239,3 +239,29 @@ enumFromThenTo 'a' 'c' 'z'
 
 #+RESULTS:
 : acegikmoqsuwy
+
+** 6.9. Show
+Typeclasses that can be derived via eg. =data A = B deriving Show=: Eq,
+Ord, Enum, Bounded, Read, Show.
+
+** 6.11 Writing instances for your typeclasses
+
+First Typeclass:
+#+begin_src haskell
+data DayOfWeek =
+  Mon | Tue | Weds | Thu | Fri | Sat | Sun
+
+data Date =
+  Date DayOfWeek Int
+
+instance Eq DayOfWeek where
+  (==) Mon Mon = True
+  (==) _ _ = False
+
+instance Eq Date where
+  (==) (Date weekday monthNum)
+       (Date weekday' monthNum') =
+    weekday == weekday' && monthNum == monthNum'
+
+Date Mon 10 == Date Mon 10
+#+end_src
