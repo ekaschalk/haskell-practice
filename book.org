@@ -265,3 +265,5 @@ instance Eq Date where
 
 Date Mon 10 == Date Mon 10
 #+end_src
+
+Deriving Ord will order on the individual types.
