@@ -181,7 +181,7 @@ drop_end x = take ((length x) - 1) x
 drop_end x = take ((+ negate 1) $ length x) x
 #+end_src
 
-* 4. Basic Datatypes
+* 4. Basic Data-types
 ** 4.2. Anatomy of a data declaration
 `Data declaration` of Bool.
 
@@ -231,7 +231,7 @@ f (a, b) = a
 * 5. Types
 See code for exercises, no text notes necessary.
 
-* 6. Typeclasses
+* 6. Type-classes
 ** 6.8. Enum
 #+begin_src haskell
 enumFromThenTo 'a' 'c' 'z'
@@ -270,3 +270,16 @@ Deriving Ord will order on the individual types.
 * 7. More Functional Patterns
 * 8. Recursion
 * 9. Lists
+* 10. Folds
+* 11. Algebraic Data-types
+=newtype= is unary constructor without products/sums.
+
+1. No runtime overhead.
+2. Can define type-class instances for newtypes that different from their
+   underlying type.
+
+#+begin_src haskell
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+-- allows
+newtype Goats = Goats Int deriving (Eq, Show, TooMany)
+#+end_src
