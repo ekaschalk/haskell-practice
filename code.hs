@@ -1,6 +1,9 @@
 {-# LANGUAGE FlexibleInstances #-}
 
+import Data.List
+import Data.Function (on)
 
+-- import Data.Foldable
 
 -- 11.5
 
@@ -41,18 +44,18 @@ doge = Plane PapuAir (Size 100)
 
 isCar :: Vehicle -> Bool
 isCar (Car x y) = True
-isCar _ = False
+isCar _         = False
 
 isPlane :: Vehicle -> Bool
 isPlane (Plane x y) = True
-isPlane _ = False
+isPlane _           = False
 
 areCars :: [Vehicle] -> Bool
 areCars = all isCar
 
 getManu :: Vehicle -> Manufacturer
 getManu (Car x y) = x
-getManu _ = undefined
+getManu _         = undefined
 
 -- 11.6
 class TooMany a where
@@ -72,10 +75,43 @@ instance TooMany (Int, String) where
 instance (Num a, TooMany a) => TooMany (a, a) where
   tooMany = tooMany . uncurry (+)
 
-
 -- tooMany 100 -> ambiguous type variable exception
 -- tooMany (Goats 100) == True
 -- tooMany (100 :: Int) == True
 -- tooMany (3 :: Int, "hi") == False
 -- tooMany (40 :: Int, 0 :: Int) == False
 -- tooMany (40, 0) -> throws exception
+
+-- 11.9
+-- Record syntax
+
+-- data Person = MkPerson String Int deriving (Eq, Show)
+
+data Person =
+  Person { name :: String
+         , age :: Int }
+         deriving (Eq, Show)
+
+data Fruit =
+    Peach
+  | Plum
+  | Apple
+  | Blackberry
+  deriving (Eq, Ord, Show)
+
+data JamJars =
+  Jam { fruit :: Fruit
+      , jars :: Int }
+      deriving (Eq, Ord, Show)
+
+countJars :: [JamJars] -> Int
+countJars = sum . map jars
+
+largestJar :: [JamJars] -> JamJars
+largestJar = maximumBy (compare `on` jars)
+
+sortByJams :: [JamJars] -> [JamJars]
+sortByJams = sortBy (compare `on` fruit)
+
+groupJams :: [JamJars] -> [[JamJars]]
+groupJams = groupBy ((==) `on` fruit)

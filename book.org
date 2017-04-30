@@ -3,6 +3,7 @@
 * Info
 Link to book:
 https://h.sicp.org.uk/virtual~plaza/books/haskell%20first%20principles.pdf
+file:///C:/Users/ekasc/Desktop/haskell%20first%20principles.pdf
 
 * 2. Hello, Haskell!
 ** 2.4. Functions
