@@ -115,3 +115,40 @@ sortByJams = sortBy (compare `on` fruit)
 
 groupJams :: [JamJars] -> [[JamJars]]
 groupJams = groupBy ((==) `on` fruit)
+
+
+-- 11.15
+
+data BinaryTree a =
+    Leaf
+  | Node (BinaryTree a) a (BinaryTree a)
+  deriving (Eq, Show)
+
+mapTree :: (a -> b) -> BinaryTree a -> BinaryTree b
+mapTree _ Leaf = Leaf
+mapTree f (Node left x right) = Node (mapTree f left) (f x) (mapTree f right)
+
+-- mapTree (+1) (Node (Node Leaf 3 Leaf) 1 (Node Leaf 4 Leaf))
+-- == Node (Node Leaf 4 Leaf) 2 (Node Leaf 5 Leaf)
+
+preorder :: BinaryTree a -> [a]
+preorder Leaf = []
+preorder (Node left x right) = [x] ++ preorder left ++ preorder right
+
+inorder :: BinaryTree a -> [a]
+inorder Leaf = []
+inorder (Node left x right) = inorder left ++ [x] ++ inorder right
+
+postorder :: BinaryTree a -> [a]
+postorder Leaf = []
+postorder (Node left x right) = postorder left ++ postorder right ++ [x]
+
+--           x   left  right
+foldTree :: (a -> b -> b -> b) -> b -> BinaryTree a -> b
+-- foldTree _ i Leaf = Leaf
+-- foldTree acc i = foldMap acc inorder
+foldTree acc i Leaf = i
+foldTree acc i (Node left x right) = acc x
+                                     (foldTree acc i left)
+                                     (foldTree acc i right)
+-- the i part is wrong, is doing numleaf times
