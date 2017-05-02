@@ -240,3 +240,19 @@ coolestChar :: String -> Char
 coolestChar = flip (!!) 0 . maximumBy (comparing length) . groupBy (==) . sort
 
 -- Above should work as is for coolestWord as well
+
+data Expr
+  = Lit Integer
+  | Add Expr Expr
+
+eval :: Expr -> Integer
+eval (Add e e') = eval e + eval e'
+eval (Lit i) = i
+
+-- eval (Add (Add (Lit 1) (Lit 2)) (Lit 9001)) == 9004
+
+printExpr :: Expr -> String
+printExpr (Add e e') = printExpr e ++ " + " ++ printExpr e'
+printExpr (Lit i) = show i
+
+-- printExpr (Add (Add (Lit 1) (Lit 2)) (Lit 9001)) == "1 + 2 + 9001"
