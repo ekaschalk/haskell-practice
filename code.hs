@@ -3,7 +3,7 @@ import Data.Traversable (sequenceA)
 import Data.List (tails)
 import Data.Maybe (maybe, mapMaybe, fromMaybe)
 
--- chp12
+-- Sring exs
 
 notThe :: String -> Maybe String
 notThe "the" = Nothing
@@ -37,6 +37,8 @@ mkWord x = if vowels > consonants then Just (Word' x) else Nothing
   where vowels = countVowels x
         consonants = toInteger (length x) - vowels
 
+-- Maybe exs
+
 data Nat =
     Zero
   | Succ Nat
@@ -51,7 +53,6 @@ integerToNat x
   | x == 0 = Just Zero
   | x >= 0 = Just (Succ (fromMaybe Zero $ integerToNat $ x-1))
   | x < 0 = Nothing
-
 
 isJust :: Maybe a -> Bool
 isJust (Just x) = True
@@ -82,3 +83,37 @@ catMaybes = concat . map maybeToList
 
 flipMaybe :: [Maybe a] -> Maybe [a]
 flipMaybe x = if any isNothing x then Nothing else Just (catMaybes x)
+
+-- Either exs
+
+accL :: Either a b -> [a] -> [a]
+accL (Left x) y = x:y
+accL _ y = y
+
+accR :: Either a b -> [b] -> [b]
+accR (Right x) y = x:y
+accR _ y = y
+
+lefts' :: [Either a b] -> [a]
+lefts' = foldr accL []
+
+rights' :: [Either a b] -> [b]
+rights' = foldr accR []
+
+partitionEithers :: [Either a b] -> ([a], [b])
+partitionEithers x = (lefts' x, rights' x)
+
+eitherMaybe' :: (b -> c) -> Either a b -> Maybe c
+eitherMaybe' f (Right b) = Just (f b)
+eitherMaybe' _ _ = Nothing
+
+either' :: (a -> c) -> (b -> c) -> Either a b -> c
+either' f g (Left a) = f a
+either' f g (Right b) = g b
+
+eitherMaybe'' :: (b -> c) -> Either a b -> Maybe c
+eitherMaybe'' f = either' (\_ -> Nothing) $ (\x -> Just x) . f
+
+-- Unfolds
+
+-- myIterate :: (a -> a) -> a -> [a]
