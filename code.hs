@@ -1,7 +1,7 @@
 import Control.Applicative
 import Data.Traversable (sequenceA)
 import Data.List (tails)
-import Data.Maybe (maybe, mapMaybe, fromMaybe)
+import Data.Maybe (maybe, mapMaybe, fromMaybe, fromJust)
 
 -- Sring exs
 
@@ -116,4 +116,22 @@ eitherMaybe'' f = either' (\_ -> Nothing) $ (\x -> Just x) . f
 
 -- Unfolds
 
--- myIterate :: (a -> a) -> a -> [a]
+myIterate :: (a -> a) -> a -> [a]
+myIterate f x = x: myIterate f (f x)
+
+-- a is prepended to list, b is next to use in call
+-- Nothing signals terminate
+-- This version will break
+myUnfoldr :: (b -> Maybe (a, b)) -> b -> [a]
+myUnfoldr f b = fst x : myUnfoldr f (snd x)
+  where x = fromJust $ f b
+
+-- This version works on eg.
+-- myUnfoldr' (\b -> if b == 0 then Nothing else Just (b, b-1)) 10
+myUnfoldr' :: (b -> Maybe (a, b)) -> b -> [a]
+myUnfoldr' f b = go $ f b
+  where go (Just x) = fst x: myUnfoldr' f (snd x)
+        go Nothing = []
+
+myIterate' :: (a -> a) -> a -> [a]
+myIterate' f = myUnfoldr (\x -> Just (x, f x))
