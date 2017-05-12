@@ -121,12 +121,6 @@ myIterate f x = x: myIterate f (f x)
 
 -- a is prepended to list, b is next to use in call
 -- Nothing signals terminate
--- This version will break
-myUnfoldr :: (b -> Maybe (a, b)) -> b -> [a]
-myUnfoldr f b = fst x : myUnfoldr f (snd x)
-  where x = fromJust $ f b
-
--- This version works on eg.
 -- myUnfoldr' (\b -> if b == 0 then Nothing else Just (b, b-1)) 10
 myUnfoldr' :: (b -> Maybe (a, b)) -> b -> [a]
 myUnfoldr' f b = go $ f b
@@ -135,3 +129,17 @@ myUnfoldr' f b = go $ f b
 
 myIterate' :: (a -> a) -> a -> [a]
 myIterate' f = myUnfoldr (\x -> Just (x, f x))
+
+
+data BinaryTree a =
+  Leaf
+  | Node (BinaryTree a) a (BinaryTree a)
+  deriving (Eq, Ord, Show)
+
+unfold :: (a -> Maybe (a, b, a)) -> a -> BinaryTree b
+unfold f a = go $ f a
+  where go (Just (left, x, right)) = Node (unfold f left) x (unfold f right)
+        go Nothing = Leaf
+
+treeBuild :: Integer -> BinaryTree Integer
+treeBuild n = unfold (\x -> if x == 0 then Nothing else Just (x-1, n-x, x-1)) n
