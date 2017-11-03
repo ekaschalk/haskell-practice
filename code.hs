@@ -1,70 +1,87 @@
--- chp15
+{-# LANGUAGE PackageImports #-}
 
 import Test.QuickCheck
-import Data.Monoid
--- import Data.Monoid hiding ((<>))
--- import Data.Semigroup
+import "base" Data.Semigroup
 
+-- * Semigroups
+-- ** Ex1
 
-data Optional a =
-    Nada
-  | Only a
-  deriving (Eq, Show)
+data Trivial = Trivial deriving (Eq, Show)
 
-instance Monoid a => Monoid (Optional a) where
-  mempty = Nada
-  mappend (Only a) (Only b) = Only $ a <> b
-  mappend (Only a) Nada = Only $ a <> mempty a
-  mappend _ (Only b) = Only $ b <> mempty b
-  mappend _ _ = Nada
+instance Semigroup Trivial where
+  (<>) _ _ = Trivial
 
--- Only (Sum 1) <> Only (Sum 2)
+instance Arbitrary Trivial where
+  arbitrary = return Trivial
 
-monoidAssoc :: (Eq m, Monoid m) => m -> m -> m -> Bool
-monoidAssoc a b c = a <> (b <> c) == (a <> b) <> c
+-- ** Ex2
 
-type S = String
-type B = Bool
+newtype Identity a = Identity a deriving (Eq, Show)
 
-newtype First' a =
-  First' { getFirst' :: Optional a}
-  deriving (Eq, Show)
+instance Semigroup (Identity a) where
+  (<>) (Identity a) _ = Identity a
 
-instance Monoid (First' a) where
-  mempty = First' Nada
-  mappend (First' (Only a)) b =  First' (Only a)
-  mappend _ (First' (Only b)) =  First' (Only b)
-  mappend _ _ = First' Nada
-
--- First' (Only 1) `mappend` First' Nada
--- First' Nada `mappend` First' (Only 1)
--- First' (Only 2) `mappend` First' (Only 1)
--- First' Nada `mappend` First' Nada
-
-firstMappend :: First' a -> First' a -> First' a
-firstMappend a b = mappend a b
-
--- instance Arbitrary (First' a) where
-instance Arbitrary (Optional a) where
+instance Arbitrary (Identity a) where
   arbitrary = do
-    Only a <- arbitrary
-    return $ Only a
+    Identity a <- arbitrary
+    return $ Identity a
 
-instance Arbitrary (First' a) where
-  arbitrary = do
-    First' a <- arbitrary
-    return $ First' a
+-- ** Ex3
 
+data Two a b = Two a b deriving (Eq, Show)
 
-type FirstMappend =
-     First' String
-  -> First' String
-  -> First' String
-  -> Bool
+instance Semigroup (Two a b) where
+  (<>) (Two a b) _ = Two a b
 
+-- Ex4/5 same as 2/3 in that we simply return the LHS (or RHS)
+-- (1 2) (3 4) (5 6) (7 8) => always (1 2) or (7 8) regardless of parens
+
+-- ** Ex6
+
+newtype BoolConj =
+  BoolConj Bool
+
+instance Semigroup BoolConj where
+  (<>) (BoolConj True) (BoolConj True) = BoolConj True
+  (<>) _ _ = BoolConj False
+
+-- Ex7 same but disjunction
+
+-- ** Ex8
+
+data Or a b =
+    Fst a
+  | Snd b
+
+instance Semigroup (Or a b) where
+  (<>) (Snd a) _ = Snd a
+  (<>) _ (Snd b) = Snd b
+  (<>) (Fst a) _ = Fst a
+
+-- ** Ex9
+
+newtype Combine a b =
+  Combine { unCombine :: (a -> b) }
+
+instance Semigroup (Combine a b) where
+  (<>) (Combine f) (Combine g) = Combine $ f . g
+  -- f : a->b
+  -- g : a->b
+  -- need to return f' : a->b
+  -- where both f and g are applied
+  -- do i make a->a->a or b->b->b somehow?
+
+  -- const is a->b->a
+
+-- ** Quickcheck
+
+semigroupAssoc :: (Eq s, Semigroup s) => s -> s -> s -> Bool
+semigroupAssoc a b c = a <> (b <> c) == (a <> b) <> c
+
+type SemigroupMappend = Trivial -> Trivial -> Trivial -> Bool
+type IDSemigroupMappend =
+  Identity String -> Identity String -> Identity String -> Bool
 
 main :: IO ()
 main = do
-  -- quickCheck (monoidAssoc :: S -> S -> S -> B)
-  quickCheck (monoidAssoc :: FirstMappend)
-  -- quickCheck (monoidLe)
+  quickCheck (semigroupAssoc :: IDSemigroupMappend)
