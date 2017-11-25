@@ -1,3 +1,10 @@
+
+main :: IO ()
+main =
+  putStrLn "hi1"
+  putStrLn "ok"
+
+
 -- -- import Data.Monoid
 -- -- import Data.Monoid hiding ((<>))
 -- -- import Data.Semigroup
