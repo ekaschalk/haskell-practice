@@ -1,5 +1,7 @@
 #+TITLE: Haskell from First Principles
 
+[[/root/dev/haskell-practice/coding/src/Lib.hs]]
+
 * Info
 Link to book:
 https://h.sicp.org.uk/virtual~plaza/books/haskell%20first%20principles.pdf
