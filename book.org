@@ -1,13 +1,12 @@
 #+TITLE: Haskell from First Principles
 
-[[/root/dev/haskell-practice/coding/src/Lib.hs]]
-
-* Info
+* Previous Chapters
+** Info
 Link to book:
 https://h.sicp.org.uk/virtual~plaza/books/haskell%20first%20principles.pdf
 file:///C:/Users/ekasc/Desktop/haskell%20first%20principles.pdf
 
-* 2. Hello, Haskell!
+** 2. Hello, Haskell!
 ** 2.4. Functions
 Type variables usually denoted a, b, c...
 Argument variables denoted x, y, ..., x', y', ..., x1, y1, ....
@@ -125,7 +124,7 @@ Equivalent applications with =$=
 (+) 1 $ (*) (2 ^ 2) $ (4 ^ 5)
 #+end_src
 
-* 3. Strings
+** 3. Strings
 ** 3.3. Printing simple strings
 =:type= for type of symbol.
 '::' can be read "has the type".
@@ -184,7 +183,7 @@ drop_end x = take ((length x) - 1) x
 drop_end x = take ((+ negate 1) $ length x) x
 #+end_src
 
-* 4. Basic Data-types
+** 4. Basic Data-types
 ** 4.2. Anatomy of a data declaration
 `Data declaration` of Bool.
 
@@ -231,10 +230,10 @@ f (a, b) = a
 
 #+RESULTS:
 : Prelude> 1
-* 5. Types
+** 5. Types
 See code for exercises, no text notes necessary.
 
-* 6. Type-classes
+** 6. Type-classes
 ** 6.8. Enum
 #+begin_src haskell
 enumFromThenTo 'a' 'c' 'z'
@@ -270,11 +269,11 @@ Date Mon 10 == Date Mon 10
 #+end_src
 
 Deriving Ord will order on the individual types.
-* 7. More Functional Patterns
-* 8. Recursion
-* 9. Lists
-* 10. Folds
-* 11. Algebraic Data-types
+** 7. More Functional Patterns
+** 8. Recursion
+** 9. Lists
+** 10. Folds
+** 11. Algebraic Data-types
 =newtype= is unary constructor without products/sums.
 
 1. No runtime overhead.
@@ -286,3 +285,5 @@ Deriving Ord will order on the individual types.
 -- allows
 newtype Goats = Goats Int deriving (Eq, Show, TooMany)
 #+end_src
+
+* Functors

@@ -63,8 +63,8 @@ instance Semigroup (Or a b) where
 newtype Combine a b =
   Combine { unCombine :: (a -> b) }
 
-instance Semigroup (Combine a b) where
-  (<>) (Combine f) (Combine g) = Combine $ f . g
+-- instance Semigroup (Combine a b) where
+--   (<>) (Combine f) (Combine g) = Combine $ f . g
   -- f : a->b
   -- g : a->b
   -- need to return f' : a->b
