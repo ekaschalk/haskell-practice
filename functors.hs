@@ -42,7 +42,47 @@ type IDFC = Identity Int -> IntToInt -> IntToInt -> Bool
 instance (Arbitrary a) => Arbitrary (Identity a) where
   arbitrary = fmap Identity arbitrary
 
+--- Ex2
+
+data Pair a = Pair a a
+  deriving (Eq, Show)
+
+instance Functor Pair where
+  fmap f (Pair a a') = Pair (f a) (f a')
+
+type PairFC = Pair Int -> IntToInt -> IntToInt -> Bool
+
+instance (Arbitrary a) => Arbitrary (Pair a) where
+  arbitrary = do
+    a <- arbitrary
+    a' <- arbitrary
+    return $ Pair a a'
+
+--- Ex3
+
+data Two a b = Two a b
+  deriving (Eq, Show)
+
+instance Functor (Two a) where
+  fmap f (Two a b) = Two a (f b)
+
+type StringToInt = Fun String Int
+type StringToString = Fun String String
+type TwoFC = Two Int String -> StringToString -> StringToInt -> Bool
+type TwoFC' = Two Int Int -> IntToInt -> IntToInt -> Bool
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
+  arbitrary = do
+    a <- arbitrary
+    b <- arbitrary
+    return $ Two a b
+
+--- Ex4
+
 main :: IO ()
 main = do
   quickCheck (functorCompose' :: IntFC)
   quickCheck (functorCompose' :: IDFC)
+  quickCheck (functorCompose' :: PairFC)
+  quickCheck (functorCompose' :: TwoFC)
+  quickCheck (functorCompose' :: TwoFC')
