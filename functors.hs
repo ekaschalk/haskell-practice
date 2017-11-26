@@ -64,6 +64,7 @@ data Two a b = Two a b
   deriving (Eq, Show)
 
 instance Functor (Two a) where
+  -- fmap f (Two a b) = Two a (f b)
   fmap f (Two a b) = Two a (f b)
 
 type StringToInt = Fun String Int
@@ -79,6 +80,58 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Two a b) where
 
 --- Ex4
 
+data Three a b c = Three a b c
+  deriving (Eq, Show)
+
+instance Functor (Three a b) where
+  fmap f (Three a b c) = Three a b (f c)
+
+instance (Arbitrary a, Arbitrary b, Arbitrary c) => Arbitrary (Three a b c) where
+  arbitrary = do
+    a <- arbitrary
+    b <- arbitrary
+    c <- arbitrary
+    return $ Three a b c
+
+type ThreeFC = Three Int Int String -> StringToString -> StringToInt -> Bool
+type ThreeFC' = Three Int Int Int -> IntToInt -> IntToInt -> Bool
+
+--- Ex5
+
+data Three' a b = Three' a b b
+  deriving (Eq, Show)
+
+instance Functor (Three' a) where
+  fmap f (Three' a b b') = Three' a (f b) (f b')
+
+instance (Arbitrary a, Arbitrary b) => Arbitrary (Three' a b) where
+  arbitrary = do
+    a <- arbitrary
+    b <- arbitrary
+    b' <- arbitrary
+    return $ Three' a b b'
+
+type Three'FC = Three' Int String -> StringToString -> StringToInt -> Bool
+type Three'FC' = Three' Int Int -> IntToInt -> IntToInt -> Bool
+
+--- Ex6-7 same as above
+
+--- Ex8
+
+data Trivial = Trivial
+  deriving (Eq, Show)
+
+-- instance Functor Trivial where
+--   fmap f Trivial = Trivial
+
+-- Answer is NO, Trivial has no Functor instance
+
+-- A functor is of kind (* -> *)
+-- but Trivial is of kind *
+
+
+
+
 main :: IO ()
 main = do
   quickCheck (functorCompose' :: IntFC)
@@ -86,3 +139,7 @@ main = do
   quickCheck (functorCompose' :: PairFC)
   quickCheck (functorCompose' :: TwoFC)
   quickCheck (functorCompose' :: TwoFC')
+  quickCheck (functorCompose' :: ThreeFC)
+  quickCheck (functorCompose' :: ThreeFC')
+  quickCheck (functorCompose' :: Three'FC)
+  quickCheck (functorCompose' :: Three'FC')
